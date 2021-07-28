@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 export const handleSubmit = (name, number) => ({
     type: phonebookTypes.ADD,
     payload: {
-        name: name,
-        number: number,
+        name,
+        number,
         id: uuidv4()
     }
 })

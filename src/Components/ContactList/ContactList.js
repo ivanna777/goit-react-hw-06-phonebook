@@ -1,26 +1,24 @@
-import { Component } from "react";
 import { connect } from "react-redux";
 import { deleteContact } from "../../redux/phonebook-actions";
 // import Contact from "../Contact";
 // import PropTypes from 'prop-types';
 import styles from "./ContactList.module.css"
 
-class ContactList extends Component {  
-    render() {
-        const {entries, deleteContact} = this.props;
+const ContactList = ({entries, onDelete}) => {
         return (
             <div className={styles["contact-wrapper"]}>
-
-                {entries.length > 0 ?
-                    (<ul className={styles["contact-list"]}>
-                        {entries.map(({id, name, number, }) => (
+                <ul className={styles["contact-list"]}>
+                        {entries.map(({id, name, number}) => (
                             <li key={id} 
                                 className={styles["contact-li"]}>
                                 {name}: {number}
 
                             <button className={styles["delete-btn"]}
-                                type="button"
-                                onClick={ deleteContact(id)}>
+                                    type="button"
+                                    data-id={ id}
+                                    onClick={onDelete}
+                                    
+                                >
                                      Delete    
                                 </button>
                             </li>
@@ -32,27 +30,30 @@ class ContactList extends Component {
                             //     deleteContact={deleteContact}
                             // />
                         ))}
-                    </ul>) :
-                    (<p className={styles["absent-contact"]}>Such contact is absent</p>)
-                }
+                    </ul> 
+                    
+                
             </div>
         )
     }
-}
-
-// 
 
 
 const getFilterName = (entries, filterValue) => {
+    console.log(entries)
+    console.log(filterValue)
     return entries.filter(entry => entry.name.includes(filterValue));
-  }
+}
+//   getFilterName()
+
+
 
 const mapStateToProps = (state) => ({
-  entries: getFilterName(state.items, state.filter),
+    entries: getFilterName(state.items, state.filter)
 });
 
 const mapDispatchToProps = dispatch => ({
-    deleteContact: id => dispatch(deleteContact(id))
+    onDelete: e => dispatch(deleteContact(e.target.dataset.id))
+        // id => dispatch(deleteContact(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
