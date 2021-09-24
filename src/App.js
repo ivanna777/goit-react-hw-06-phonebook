@@ -4,11 +4,11 @@ import ContactList from './Components/ContactList';
 import Filter from "./Components/Filter";
 
 class App extends Component {
-  state = {
-    entries: [],
-    name: '',
-    number: ''
-  }
+  // state = {
+  //   entries: [],
+  //   name: '',
+  //   number: ''
+  // }
 
   render() {
   return (
